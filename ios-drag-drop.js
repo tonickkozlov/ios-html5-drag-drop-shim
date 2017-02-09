@@ -26,10 +26,10 @@ function _exposeIosHtml5DragDropShim(doc, config) {
     }
 
     if(config.holdToDrag){
-      doc.addEventListener("touchstart", touchstartDelay(config.holdToDrag));
+      doc.addEventListener("touchstart", touchstartDelay(config.holdToDrag, { passive: true }));
     }
     else {
-      doc.addEventListener("touchstart", touchstart);
+      doc.addEventListener("touchstart", touchstart, { passive: true });
     }
   }
 
@@ -363,7 +363,7 @@ function _exposeIosHtml5DragDropShim(doc, config) {
     if(context) {
       handler = handler.bind(context);
     }
-    el.addEventListener(event, handler);
+    el.addEventListener(event, handler, { passive: true });
     return {
       off: function() {
         return el.removeEventListener(event, handler);
@@ -379,7 +379,7 @@ function _exposeIosHtml5DragDropShim(doc, config) {
       handler(evt);
       return el.removeEventListener(event,listener);
     }
-    return el.addEventListener(event,listener);
+    return el.addEventListener(event,listener, { passive: true });
   }
 
   // duplicateStyle expects dstNode to be a clone of srcNode
